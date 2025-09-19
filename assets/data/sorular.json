@@ -1,24 +1,68 @@
 [
   {
-    "id": "q1",
-    "question": "1 + 3 = ?",
+    "id": "1",
+    "question": "Wie sagt man auf Deutsch 'Merhaba'?",
     "options": [
-      { "id": "a", "text": "1" },
-      { "id": "b", "text": "4" },
-      { "id": "c", "text": "2" },
-      { "id": "d", "text": "9" }
+      { "id": "a", "text": "Tschüss" },
+      { "id": "b", "text": "Hallo" },
+      { "id": "c", "text": "Danke" },
+      { "id": "d", "text": "Bitte" }
     ],
     "correct_answer": "b"
   },
   {
-    "id": "q2",
-    "question": "5 - 2 = ?",
+    "id": "2",
+    "question": "Welche Zahl ist 'acht'?",
     "options": [
-      { "id": "a", "text": "2" },
-      { "id": "b", "text": "1" },
-      { "id": "c", "text": "3" },
-      { "id": "d", "text": "0" }
+      { "id": "a", "text": "7" },
+      { "id": "b", "text": "6" },
+      { "id": "c", "text": "8" },
+      { "id": "d", "text": "9" }
     ],
     "correct_answer": "c"
+  },
+  {
+    "id": "3",
+    "question": "Welche Farbe hat die Banane?",
+    "options": [
+      { "id": "a", "text": "Rot" },
+      { "id": "b", "text": "Gelb" },
+      { "id": "c", "text": "Blau" },
+      { "id": "d", "text": "Schwarz" }
+    ],
+    "correct_answer": "b"
+  },
+  {
+    "id": "4",
+    "question": "Was sagt man im Supermarkt an der Kasse?",
+    "options": [
+      { "id": "a", "text": "Guten Abend!" },
+      { "id": "b", "text": "Bitte schön!" },
+      { "id": "c", "text": "Entschuldigung!" },
+      { "id": "d", "text": "Hallo!" }
+    ],
+    "correct_answer": "b"
+  },
+  {
+    "id": "5",
+    "question": "Wer arbeitet im Krankenhaus?",
+    "options": [
+      { "id": "a", "text": "Lehrer" },
+      { "id": "b", "text": "Arzt" },
+      { "id": "c", "text": "Verkäufer" },
+      { "id": "d", "text": "Fahrer" }
+    ],
+    "correct_answer": "b"
+  },
+  {
+    "id": "6",
+    "question": "Wie spät ist es? (08:30)",
+    "options": [
+      { "id": "a", "text": "Es ist halb neun." },
+      { "id": "b", "text": "Es ist halb acht." },
+      { "id": "c", "text": "Es ist neun Uhr dreißig. Es ist neun Uhr dreißig." },
+      { "id": "d", "text": "Es ist zehn Uhr." }
+    ],
+    "correct_answer": "a"
   }
 ]

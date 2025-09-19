@@ -15,6 +15,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         bottomNavigationBarTheme: const BottomNavigationBarThemeData(backgroundColor: Colors.white),
         scaffoldBackgroundColor: Colors.white,
+        cardTheme: CardThemeData(color: Colors.white),
         appBarTheme: AppBarTheme(
           backgroundColor: Colors.deepPurple,
           foregroundColor: Colors.white
