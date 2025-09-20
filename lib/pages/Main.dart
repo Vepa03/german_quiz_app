@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:german_quiz_app/simple_provider.dart';
 
-class Main extends StatefulWidget {
+class Main extends ConsumerStatefulWidget {
   const Main({super.key});
 
   @override
-  State<Main> createState() => _MainState();
+  ConsumerState<Main> createState() => _MainState();
 }
 
-class _MainState extends State<Main> {
+class _MainState extends ConsumerState<Main> {
   final images = [
     "assets/images/bg2.jpg",
     "assets/images/bg3.jpg",
@@ -44,6 +46,7 @@ class _MainState extends State<Main> {
 
   @override
   Widget build(BuildContext context) {
+    final score_show = ref.watch(trueProvider);
     return Scaffold(
       body: ListView(
         children: [
@@ -83,9 +86,11 @@ class _MainState extends State<Main> {
                 ),
               ],
             ),),
-          )
+          ),
+          Text(score_show.toString())
         ],
-      )
+      ),
+      
     );
   }
 }

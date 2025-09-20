@@ -1,21 +1,20 @@
 import 'dart:convert';
-
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:german_quiz_app/model/quiz_questions.dart';
+import 'package:german_quiz_app/simple_provider.dart';
 
-class Questions extends StatefulWidget {
+class Questions extends ConsumerStatefulWidget {
   const Questions({super.key});
 
   @override
-  State<Questions> createState() => _QuestionsState();
+  ConsumerState<Questions> createState() => _QuestionsState();
 }
 
-class _QuestionsState extends State<Questions> {
+class _QuestionsState extends ConsumerState<Questions> {
 
   late Future<List<QuizQuestions>> futureQuestions;
-
-  int score =0;
 
   final Map<int, String> selected = {};
 
@@ -27,8 +26,15 @@ class _QuestionsState extends State<Questions> {
 
   @override
   Widget build(BuildContext context) {
+    final true_score = ref.watch(trueProvider);
+    final false_score = ref.watch(falseProvider);
     return Scaffold(
-      appBar: AppBar(title: Text("Score: $score")),
+      appBar: AppBar(title: Row(
+        children: [
+          Text("Score: $true_score"),
+          Text("Score: $false_score"),
+        ],
+      )),
       body: FutureBuilder<List<QuizQuestions>>(
         future: futureQuestions,
         builder: (context, snapshot) {
@@ -70,9 +76,11 @@ class _QuestionsState extends State<Questions> {
                                 ? null // zaten bir seçim yapıldı, tekrar seçilemez
                                 : () {
                                     final isCorrect = o.id == q.correctAnswer;
+                                    final isInCorrect = o.id != q.correctAnswer;
                                     setState(() {
                                       selected[index] = o.id; // seçimi kaydet
-                                      if (isCorrect) score++;  // sadece ilk ve doğru seçişte artar
+                                      if (isCorrect) ref.read(trueProvider.notifier).state++;
+                                      if (isInCorrect) ref.read(falseProvider.notifier).state++;  // sadece ilk ve doğru seçişte artar
                                     });
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(content: Text(isCorrect ? "True" : "False")),

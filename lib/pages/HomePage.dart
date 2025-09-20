@@ -13,7 +13,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
-  static const List<Widget> _widgetOptions = <Widget>[
+  final List<Widget> pages = const[
     Main(),
     Questions(),
     Completed()
@@ -58,9 +58,10 @@ class _HomePageState extends State<HomePage> {
       selectedItemColor: Colors.black,
       onTap: _onItemTapped
       ),
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
-      ),
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: pages,
+      )
 
     );
   }
