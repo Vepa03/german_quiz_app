@@ -1,6 +1,26 @@
+class QuizCategories {
+  final String id;
+  final String Category;
+  final List<QuizQuestions> questions;
+
+  QuizCategories({
+    required this.id,
+    required this.Category,
+    required this.questions
+  });
+
+  factory QuizCategories.fromJson(Map<String, dynamic> json){
+    return QuizCategories(
+      id: json['id'] as String, 
+      Category: json['questions'] as String, 
+      questions: (json['questions'] as List<dynamic>).map((e)=> QuizQuestions.fromJson(e as Map<String, dynamic>)).toList(),
+      );
+  }
+}
+
 class QuizQuestions {
   final String id;
-  final String question;          // <-- Tekil ve "question"
+  final String question;          
   final List<Option> options;
   final String correctAnswer;     // <-- "correct_answer"
 
