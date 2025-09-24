@@ -1,28 +1,33 @@
 class QuizCategories {
   final String id;
-  final String Category;
+  final String category;
+  final String questionNumber;
   final List<QuizQuestions> questions;
 
   QuizCategories({
     required this.id,
-    required this.Category,
-    required this.questions
+    required this.category,
+    required this.questionNumber,
+    required this.questions,
   });
 
-  factory QuizCategories.fromJson(Map<String, dynamic> json){
+  factory QuizCategories.fromJson(Map<String, dynamic> json) {
     return QuizCategories(
-      id: json['id'] as String, 
-      Category: json['questions'] as String, 
-      questions: (json['questions'] as List<dynamic>).map((e)=> QuizQuestions.fromJson(e as Map<String, dynamic>)).toList(),
-      );
+      id: json['id'] as String,
+      category: json['category'] as String,
+      questionNumber: json['question_number'] as String,
+      questions: (json['questions'] as List<dynamic>)
+          .map((e) => QuizQuestions.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
   }
 }
 
 class QuizQuestions {
   final String id;
-  final String question;          
+  final String question;
   final List<Option> options;
-  final String correctAnswer;     // <-- "correct_answer"
+  final String correctAnswer;
 
   QuizQuestions({
     required this.id,
