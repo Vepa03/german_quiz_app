@@ -16,11 +16,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         bottomNavigationBarTheme: const BottomNavigationBarThemeData(backgroundColor: Colors.white),
-        scaffoldBackgroundColor: Colors.white,
+        scaffoldBackgroundColor: const Color.fromARGB(255, 255, 255, 255),
         cardTheme: CardThemeData(color: Colors.white),
         appBarTheme: AppBarTheme(
-          backgroundColor: Colors.deepPurple,
-          foregroundColor: Colors.white
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.black
         ),
       ),
       home: HomePage()

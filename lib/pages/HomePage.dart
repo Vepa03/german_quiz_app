@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:german_quiz_app/pages/Completed.dart';
+import 'package:german_quiz_app/pages/ChatBot.dart';
 import 'package:german_quiz_app/pages/Main.dart';
 import 'package:german_quiz_app/pages/Questions.dart';
 import 'package:german_quiz_app/pages/Settings.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -16,7 +17,7 @@ class _HomePageState extends State<HomePage> {
   final List<Widget> pages = const[
     Main(),
     CategoriesPage(),
-    Completed(),
+    Chatbot(),
   ];
 
   void _onItemTapped(int index) {
@@ -49,9 +50,9 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(items: const <BottomNavigationBarItem> [
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+        BottomNavigationBarItem(icon: Icon(FontAwesomeIcons.home), label: 'Home'),
+        BottomNavigationBarItem(icon: Icon(FontAwesomeIcons.bookOpen), label: 'Questions'),
+        BottomNavigationBarItem(icon: Icon(FontAwesomeIcons.robot), label: 'ChatBot'),
       ],
       currentIndex: _selectedIndex,
       unselectedItemColor: Colors.grey,
