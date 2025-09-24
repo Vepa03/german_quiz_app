@@ -65,8 +65,6 @@ class _QuestionsPageState extends ConsumerState<QuestionsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final trueScore = ref.watch(trueProvider);
-    final falseScore = ref.watch(falseProvider);
 
     final questions = widget.questions;
 
@@ -77,7 +75,7 @@ class _QuestionsPageState extends ConsumerState<QuestionsPage> {
         actions: [
           GestureDetector(
             onTap: (){
-              
+
             },
             child: Padding(
               padding: const EdgeInsets.only(left: 10.0, right: 10.0),
@@ -136,11 +134,6 @@ class _QuestionsPageState extends ConsumerState<QuestionsPage> {
                                       } else {
                                         ref.read(falseProvider.notifier).state++;
                                       }
-                                      ScaffoldMessenger.of(context).showSnackBar(
-                                        SnackBar(
-                                          content: Text(isCorrect ? 'Doğru ✅' : 'Yanlış ❌'),
-                                        ),
-                                      );
                                     },
                               child: Container(
                                 margin: const EdgeInsets.all(6),
