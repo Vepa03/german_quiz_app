@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:german_quiz_app/model/quiz_questions.dart';
+import 'package:german_quiz_app/pages/Completed.dart';
+import 'package:german_quiz_app/selected_provider.dart';
 import 'package:german_quiz_app/simple_provider.dart';
 
 class CategoriesPage extends ConsumerWidget {
@@ -55,125 +57,142 @@ class QuestionsPage extends ConsumerStatefulWidget {
     required this.title,
     required this.questions,
   });
-
   @override
   ConsumerState<QuestionsPage> createState() => _QuestionsPageState();
 }
 
 class _QuestionsPageState extends ConsumerState<QuestionsPage> {
   final Map<int, String> selected = {}; // soruIndex -> seçilen şık id
+  late int galan_sor;
+  @override
+  void initState(){
+    super.initState();
+    galan_sor = widget.questions.length;
+    selected.clear();
+    ref.read(trueProvider.notifier).state = 0;
+    ref.read(falseProvider.notifier).state = 0;
+  }
 
   @override
   Widget build(BuildContext context) {
 
     final questions = widget.questions;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-        centerTitle: true,
-        actions: [
-          GestureDetector(
-            onTap: (){
-
-            },
-            child: Padding(
-              padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-              child: Text("✅", style: TextStyle(fontSize: 30),),
-            ),
-          )
-        ]
-
-        
-      ),
-      body: questions.isEmpty
-          ? const Center(child: Text('Soru yok'))
-          : ListView.builder(
-              itemCount: questions.length,
-              itemBuilder: (context, index) {
-                final q = questions[index];
-                final selectedId = selected[index];
-
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Card(
-                    clipBehavior: Clip.antiAlias,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(12),
-                          child: Text(
-                            '${q.id}) ${q.question}',
-                            style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
+    return WillPopScope(
+      onWillPop: () async {
+        selected.clear();
+        galan_sor = widget.questions.length;
+        ref.read(trueProvider.notifier).state = 0;
+        ref.read(falseProvider.notifier).state = 0;
+        return true; 
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(widget.title),
+          centerTitle: true,
+          actions: [
+            Text(galan_sor.toString())
+          ]
+      
+          
+        ),
+        body: questions.isEmpty
+            ? const Center(child: Text('Soru yok'))
+            : ListView.builder(
+                itemCount: questions.length,
+                itemBuilder: (context, index) {
+                  final q = questions[index];
+                  final selectedId = selected[index];
+      
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Card(
+                      clipBehavior: Clip.antiAlias,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(12),
+                            child: Text(
+                              '${q.id}) ${q.question}',
+                              style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
-                        ),
-                        GridView.count(
-                          crossAxisCount: 2,
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          childAspectRatio: 3,
-                          children: q.options.map((o) {
-                            final isChosen = selectedId == o.id;
-                            final locked = selectedId != null;
-
-                            return GestureDetector(
-                              onTap: locked
-                                  ? null
-                                  : () {
-                                      final isCorrect = o.id == q.correctAnswer;
-                                      setState(() {
-                                        selected[index] = o.id;
-                                      });
-                                      // Skoru sadece ilk seçimde güncelle
-                                      if (isCorrect) {
-                                        ref.read(trueProvider.notifier).state++;
-                                      } else {
-                                        ref.read(falseProvider.notifier).state++;
-                                      }
-                                    },
-                              child: Container(
-                                margin: const EdgeInsets.all(6),
-                                padding: const EdgeInsets.symmetric(horizontal: 8),
-                                decoration: BoxDecoration(
-                                  color: isChosen
-                                      ? (o.id == q.correctAnswer
-                                          ? Colors.green.shade100
-                                          : Colors.red.shade100)
-                                      : Colors.blue.shade50,
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(
+                          GridView.count(
+                            crossAxisCount: 2,
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            childAspectRatio: 3,
+                            children: q.options.map((o) {
+                              final isChosen = selectedId == o.id;
+                              final locked = selectedId != null;
+      
+                              return GestureDetector(
+                                onTap: locked
+                                    ? null
+                                    : () {
+                                        final isCorrect = o.id == q.correctAnswer;
+                                        setState(() {
+                                          selected[index] = o.id;
+                                          galan_sor--;
+                                          ref.read(selectedProvider.notifier).setSelected(index, o.id);
+                                        });
+      
+                                        final all_answered = selected.length == questions.length;
+                                        // Skoru sadece ilk seçimde güncelle
+                                        if (isCorrect) {
+                                          ref.read(trueProvider.notifier).state++;
+                                        } else {
+                                          ref.read(falseProvider.notifier).state++;
+                                        }
+                                        if (all_answered){
+                                          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> Completed()),
+                                          (Route<dynamic> route)=> false);
+                                        }
+                                      },
+                                child: Container(
+                                  margin: const EdgeInsets.all(6),
+                                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                                  decoration: BoxDecoration(
                                     color: isChosen
-                                        ? Colors.black54
-                                        : Colors.blueGrey.shade200,
+                                        ? (o.id == q.correctAnswer
+                                            ? Colors.green.shade100
+                                            : Colors.red.shade100)
+                                        : Colors.blue.shade50,
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: Border.all(
+                                      color: isChosen
+                                          ? Colors.black54
+                                          : Colors.blueGrey.shade200,
+                                    ),
                                   ),
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    o.text,
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: isChosen
-                                          ? FontWeight.w600
-                                          : FontWeight.normal,
+                                  child: Center(
+                                    child: Text(
+                                      o.text,
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: isChosen
+                                            ? FontWeight.w600
+                                            : FontWeight.normal,
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            );
-                          }).toList(),
-                        ),
-                        const SizedBox(height: 8),
-                      ],
+                              );
+                            }).toList(),
+                          ),
+                          const SizedBox(height: 8),
+                        ],
+                      ),
                     ),
-                  ),
-                );
-              },
-            ),
+                  );
+                },
+              ),
+      ),
     );
   }
 }
@@ -181,7 +200,6 @@ class _QuestionsPageState extends ConsumerState<QuestionsPage> {
 final categoriesProvider = FutureProvider<List<QuizCategories>>((ref) async {
   final data = await rootBundle.loadString("assets/data/sorular.json");
   final List<dynamic> jsonList = jsonDecode(data) as List<dynamic>;
-  // JSON’ınız kökte bir liste (birden fazla kategori olabilir)
   return jsonList
       .map((e) => QuizCategories.fromJson(e as Map<String, dynamic>))
       .toList();
