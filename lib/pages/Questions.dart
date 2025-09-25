@@ -141,14 +141,14 @@ class _QuestionsPageState extends ConsumerState<QuestionsPage> {
                                           ref.read(selectedProvider.notifier).setSelected(index, o.id);
                                         });
       
-                                        final all_answered = selected.length == questions.length;
+                                        final allAnswered = selected.length == questions.length;
                                         // Skoru sadece ilk seçimde güncelle
                                         if (isCorrect) {
                                           ref.read(trueProvider.notifier).state++;
                                         } else {
                                           ref.read(falseProvider.notifier).state++;
                                         }
-                                        if (all_answered){
+                                        if (allAnswered){
                                           Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> Completed()),
                                           (Route<dynamic> route)=> false);
                                         }

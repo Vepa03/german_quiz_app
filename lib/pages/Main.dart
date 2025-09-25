@@ -46,7 +46,7 @@ class _MainState extends ConsumerState<Main> {
 
   @override
   Widget build(BuildContext context) {
-    final score_show = ref.watch(trueProvider);
+    final scoreShow = ref.watch(trueProvider);
     return Scaffold(
       body: ListView(
         children: [
@@ -87,7 +87,7 @@ class _MainState extends ConsumerState<Main> {
               ],
             ),),
           ),
-          Text(score_show.toString())
+          Text(scoreShow.toString())
         ],
       ),
       
@@ -99,7 +99,7 @@ class _MainState extends ConsumerState<Main> {
 class _CircleButton_right extends StatelessWidget {
   final IconData icon;
   final VoidCallback onTap;
-  const _CircleButton_right({required this.icon, required this.onTap, super.key});
+  const _CircleButton_right({required this.icon, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -123,7 +123,7 @@ class _CircleButton_right extends StatelessWidget {
 class _CircleButton_left extends StatelessWidget {
   final IconData icon;
   final VoidCallback onTap;
-  const _CircleButton_left({required this.icon, required this.onTap, super.key});
+  const _CircleButton_left({required this.icon, required this.onTap});
 
   @override
   Widget build(BuildContext context) {

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:german_quiz_app/pages/ChatBot.dart';
 import 'package:german_quiz_app/pages/Main.dart';
 import 'package:german_quiz_app/pages/Questions.dart';
-import 'package:german_quiz_app/pages/Settings.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HomePage extends StatefulWidget {
@@ -37,17 +36,6 @@ class _HomePageState extends State<HomePage> {
         ),
         title: Text("Quiz"),
         centerTitle: true,
-        actions: [
-          GestureDetector(
-            onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context)=> Settings()));
-            },
-            child: Padding(
-              padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-              child: Icon(Icons.settings_outlined,  size: width*0.07,),
-            ),
-          )
-        ],
       ),
       bottomNavigationBar: BottomNavigationBar(items: const <BottomNavigationBarItem> [
         BottomNavigationBarItem(icon: Icon(FontAwesomeIcons.home), label: 'Home'),

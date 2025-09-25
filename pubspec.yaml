@@ -39,6 +39,7 @@ dependencies:
   fl_chart: ^1.1.0
   riverpod: ^3.0.0
   font_awesome_flutter: ^10.10.0
+  http: ^1.5.0
 
 dev_dependencies:
   flutter_test:
